@@ -5,12 +5,14 @@ import { useTitle } from "../hooks/useTitle";
  const MovieDetails=() => {
     const params = useParams();
     const [movie, setMovie] = useState({});
-    const pageTitle= useTitle(movie.title);
+
+    //eslint-disable-next-line
+    useTitle(movie.title);
     const image =`https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
 
     useEffect(() => {
         async function fetchMovie() {
-            const response = await fetch(`https://api.themoviedb.org/3/movie/${params.id}?api_key=2f77aa7e44a2c0b4f3b97d7de955ee6f`);
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${params.id}?api_key=${process.env.REACT_APP_SECRET_KEY}`);
             const json = await response.json()
             setMovie(json);
         }
